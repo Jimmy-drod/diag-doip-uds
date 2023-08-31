@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "CUFoRuOllVmUWyxEgPeplkP3PLcvsqF3F0+9957h0BM4SIfMk/0vvVu9MiAV62LUkOI3tPSLT0pZqNGed1VQuw==",
+  "success": true,
+  "projectFilePath": "E:\\diag-doip-uds\\Diag-Doip-Uds\\Diag-Doip-Uds.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\xingzp.fnst\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

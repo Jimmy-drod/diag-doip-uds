@@ -1,0 +1,17 @@
+E:\diag-doip-uds\Diag-Doip-Uds\bin\Debug\net6.0\Diag-Doip-Uds.exe
+E:\diag-doip-uds\Diag-Doip-Uds\bin\Debug\net6.0\Diag-Doip-Uds.deps.json
+E:\diag-doip-uds\Diag-Doip-Uds\bin\Debug\net6.0\Diag-Doip-Uds.runtimeconfig.json
+E:\diag-doip-uds\Diag-Doip-Uds\bin\Debug\net6.0\Diag-Doip-Uds.dll
+E:\diag-doip-uds\Diag-Doip-Uds\bin\Debug\net6.0\Diag-Doip-Uds.pdb
+E:\diag-doip-uds\Diag-Doip-Uds\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.csproj.AssemblyReference.cache
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.GeneratedMSBuildEditorConfig.editorconfig
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.AssemblyInfoInputs.cache
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.AssemblyInfo.cs
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.csproj.CoreCompileInputs.cache
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.csproj.CopyComplete
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.dll
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\refint\Diag-Doip-Uds.dll
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.pdb
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\Diag-Doip-Uds.genruntimeconfig.cache
+E:\diag-doip-uds\Diag-Doip-Uds\obj\Debug\net6.0\ref\Diag-Doip-Uds.dll
