@@ -1,2 +1,2 @@
 # diag-doip-uds
-C# implementation of Doip protocol
+C# implementation of doip external test equipment
