@@ -63,41 +63,47 @@ namespace Diag_Doip_Uds.Lib.Utility_support.Socket.Udp
         public bool Open()
         {
             bool retVal = false;
-            udp_socket_ = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            // set broadcast option
-            udp_socket_.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
-            // reuse address
-            udp_socket_.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
-            if(port_type_ == PortType.kUdp_Broadcast)
+            try
             {
-                // Todo : change the hardcoded value of port number 13400
-                udp_socket_.Bind(new IPEndPoint(IPAddress.Any, 13400));
+                udp_socket_ = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                // set broadcast option
+                udp_socket_.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
+                // reuse address
+                udp_socket_.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+                if (port_type_ == PortType.kUdp_Broadcast)
+                {
+                    // Todo : change the hardcoded value of port number 13400
+                    udp_socket_.Bind(new IPEndPoint(IPAddress.Any, 13400));
+                }
+                else
+                {
+                    //bind to local address and random port
+                    udp_socket_.Bind(new IPEndPoint(IPAddress.Parse(local_ip_address_), local_port_num_));
+                }
+
+                IPEndPoint? endpoint = udp_socket_.LocalEndPoint as IPEndPoint;
+
+                if (endpoint == null)
+                {
+                    Console.WriteLine("Udp Socket Bind failed");
+                    return false;
+                }
+
+                Console.WriteLine($"Udp Socket Opened and bound to <{endpoint.Address.ToString()}, {endpoint.Port}>");
+                // Update the port number with new one
+                local_port_num_ = (ushort)endpoint.Port;
+                // start reading
+                Interlocked.Exchange(ref exit_request_, 1);
+                //cond_var_.notify_all();
+                retVal = true;
+                // start async receive
+                StartReceiving();
             }
-            else
+            catch(Exception ex)
             {
-                //bind to local address and random port
-                udp_socket_.Bind(new IPEndPoint(IPAddress.Parse(local_ip_address_), local_port_num_));
+                Console.WriteLine(ex.Message.ToString());
             }
-
-            IPEndPoint? endpoint = udp_socket_.LocalEndPoint as IPEndPoint;
-
-            if(endpoint == null)
-            {
-                Console.WriteLine("Udp Socket Bind failed");
-                return false;
-            }
-
-            Console.WriteLine($"Udp Socket Opened and bound to <{endpoint.Address.ToString()}, {endpoint.Port}>");
-            // Update the port number with new one
-            local_port_num_ = (ushort)endpoint.Port;
-            // start reading
-            Interlocked.Exchange(ref exit_request_, 1);
-            //cond_var_.notify_all();
-            retVal = true;
-            // start async receive
-            StartReceiving();
-
             return retVal;
         }
 
