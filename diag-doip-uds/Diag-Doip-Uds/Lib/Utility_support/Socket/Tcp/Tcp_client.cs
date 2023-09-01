@@ -46,21 +46,28 @@ namespace Diag_Doip_Uds.Lib.Utility_support.Socket.Tcp
         public bool Open()
         {
             bool retVal = false;
-            // 创建 TCP Socket
-            tcp_socket_ = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                // 创建 TCP Socket
+                tcp_socket_ = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            // 设置 Socket 为非阻塞模式
-            //tcp_socket_.Blocking = false;
+                // 设置 Socket 为非阻塞模式
+                tcp_socket_.Blocking = false;
 
-            // 设置 Socket 选项，允许地址重用
-            tcp_socket_.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                // 设置 Socket 选项，允许地址重用
+                tcp_socket_.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
-            // 绑定到本地地址和随机端口
-            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse(local_ip_address_), local_port_num_);
-            tcp_socket_.Bind(localEndPoint);
+                // 绑定到本地地址和随机端口
+                IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse(local_ip_address_), local_port_num_);
+                tcp_socket_.Bind(localEndPoint);
 
-            Console.WriteLine($"Tcp Socket opened and bound to <{localEndPoint.Address.ToString()}, {localEndPoint.Port}>");
-            retVal = true;
+                Console.WriteLine($"Tcp Socket opened and bound to <{localEndPoint.Address.ToString()}, {localEndPoint.Port}>");
+                retVal = true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
             return retVal;
         }
 
@@ -72,15 +79,23 @@ namespace Diag_Doip_Uds.Lib.Utility_support.Socket.Tcp
             if (tcp_socket_ == null) return ret_val;
             try
             {
-                tcp_socket_.Connect(IPAddress.Parse(_host_ip_address), _host_port_num);
-                tcp_socket_.Blocking = false;
-                // 启动接收数据的线程
-                Interlocked.Exchange(ref is_connected, 1);
-                thread_ = new Thread(HandleMessage);
-                thread_.Start();
-                ret_val = true;
+                IAsyncResult result = tcp_socket_.BeginConnect(IPAddress.Parse(_host_ip_address), _host_port_num, null, null);
+                bool success = result.AsyncWaitHandle.WaitOne(2000); // 等待2秒
+                if (success)
+                {
+                    tcp_socket_.EndConnect(result);
+                    // 启动接收数据的线程
+                    Interlocked.Exchange(ref is_connected, 1);
+                    thread_ = new Thread(HandleMessage);
+                    thread_.Start();
+                    ret_val = true;
+                }
+                else
+                {
+                    Console.WriteLine($"Tcp Socket connect to <{_host_ip_address}, {_host_port_num}> failed");
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine($"Tcp Socket connect to <{_host_ip_address}, {_host_port_num}> failed");
             }
