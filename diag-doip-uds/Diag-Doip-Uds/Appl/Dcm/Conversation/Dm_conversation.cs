@@ -325,7 +325,7 @@ namespace Diag_Doip_Uds.Appl.Dcm.Conversation
                 {
                     // Check for pending response
                     // payload = 0x7F XX 0x78
-                    if (_payload_info[2] == 0x78)
+                    if (_payload_info[0] == 0x7F && _payload_info[2] == 0x78)
                     {
                         Console.WriteLine($"'{conversation_name_}'-> Diagnostic pending response received in Conversation");
                         ret_val.First = IndicationResult.kIndicationPending;
